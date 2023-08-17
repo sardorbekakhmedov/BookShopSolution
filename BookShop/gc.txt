@@ -1,0 +1,21 @@
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+
+  "AllowedHosts": "*",
+
+  "JwtBearer": {
+    "SigningKey": "asdiopqw123123sdf234dsfeklzxcaskdlqoiwpe90-12390-45jidsfsdfsdf!",
+    "ValidIssuer": "bookshop.api.issuer!",
+    "ValidAudience": "bookshop.api.audience!",
+    "ExpiresInMinutes": 15
+  },
+
+  "ConnectionStrings": {
+    "BookShopDb": "Server=localhost; Port=5440; Database=bookshop_db; User Id=bookshop_username; Password=bookshop_password;"
+  }
+}

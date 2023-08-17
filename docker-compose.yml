@@ -1,0 +1,22 @@
+version: '3.9'
+
+services:
+  bookshop_db:
+    image: postgres:latest
+    container_name: bookshop_container
+    ports:
+      -  "5440:5432"
+    environment:
+      POSTGRES_USER: bookshop_username
+      POSTGRES_PASSWORD: bookshop_password
+      POSTGRES_DB: bookshop_db
+    volumes:
+      - bookshop_db_data:/var/lib/postgres/data 
+    networks:
+      bookshop:
+    
+networks:
+  bookshop:
+
+volumes:
+  bookshop_db_data:
