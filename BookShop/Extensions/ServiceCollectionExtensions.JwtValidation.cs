@@ -7,7 +7,7 @@ namespace BookShop.Api.Extensions;
 
 public static partial class ServiceCollectionExtensions
 {
-    public static void AddJwtValidator(this IServiceCollection services, IConfiguration configuration)
+    public static void AddAuthenticationWithJwtBearer(this IServiceCollection services, IConfiguration configuration)
     {
         var section = configuration.GetSection("JwtBearer");
         services.Configure<JwtOption>(section);

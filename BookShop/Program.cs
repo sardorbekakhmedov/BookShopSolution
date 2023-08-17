@@ -14,9 +14,9 @@ builder.Logging.AddSerilog(logger);
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
+builder.Services.AddAuthenticationWithJwtBearer(builder.Configuration);
 builder.Services.AddAuthorizationWithRoles();
 builder.Services.AddSwaggerWithHeader();
-builder.Services.AddJwtValidator(builder.Configuration);
 builder.Services.AddBookshopDbContext(builder.Configuration);
 
 builder.Services.AddBookshopServices();

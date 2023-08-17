@@ -99,7 +99,8 @@ public class UserManager : IUserManager
 
     public async ValueTask<(string, double)> LoginAsync(string username, string password)
     {
-        var user = await _userRepository.SelectSingleAsync(u => u.Username.Equals(username));
+        var user = await GetUsersWithRolesBooksImages()
+            .SingleOrDefaultAsync(u => u.Username.Equals(username));
 
         if (user is null)
             throw new NotFoundException("User not found!");
@@ -114,10 +115,7 @@ public class UserManager : IUserManager
 
     public async ValueTask<IEnumerable<UserDto>> GetAllUsersAsync(UserFilter filter)
     {
-        var query = _userRepository.SelectAll()
-            .Include(i => i.UserImages)
-            .Include(r => r.Roles)
-            .Include(b => b.Books).AsQueryable();
+        var query = GetUsersWithRolesBooksImages();
 
         if (filter.Username is not null)
             query = query.Where(u => u.Username.ToLower().Contains(filter.Username.ToLower()));
@@ -135,14 +133,16 @@ public class UserManager : IUserManager
 
     public async ValueTask<UserDto> GetByIdAsync(Guid userId)
     {
-        var user = await _userRepository.SelectSingleAsync(u => u.Id.Equals(userId));
+        var user = await GetUsersWithRolesBooksImages()
+            .SingleOrDefaultAsync(u => u.Id.Equals(userId));
 
         return user == null ? throw new NotFoundException("User not found!") : user.ToUserDto();
     }
 
     public async ValueTask<UserDto> GetByUsernameAsync(string username)
     {
-        var user = await _userRepository.SelectSingleAsync(u => u.Username.Equals(username));
+        var user = await GetUsersWithRolesBooksImages()
+            .SingleOrDefaultAsync(u => u.Username.Equals(username));
 
         return user == null ? throw new NotFoundException("User not found!") : user.ToUserDto();
     }
@@ -194,6 +194,14 @@ public class UserManager : IUserManager
 
         userRole = new Role() { Name = UserRoles.User };
         return await _roleRepository.InsertAsync(userRole);
+    }
+
+    private IQueryable<User> GetUsersWithRolesBooksImages()
+    {
+        return _userRepository.SelectAll()
+            .Include(i => i.UserImages)
+            .Include(r => r.Roles)
+            .Include(b => b.Books).AsQueryable();
     }
 
     private async ValueTask<Image> SaveImageAsync(IFormFile imageFile)

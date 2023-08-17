@@ -26,8 +26,6 @@ public class UsersController : ControllerBase
         if (!ModelState.IsValid)
             return BadRequest(filter);
 
-        var userId = User.Identity;
-
         try
         {
             return Ok(await _userManager.GetAllUsersAsync(filter));
@@ -113,7 +111,6 @@ public class UsersController : ControllerBase
             return Problem(e.Message);
         }
     }
-
 
     [HttpPatch("{userId:guid}/image")]
     [Authorize(Policy = UserRoles.User)]

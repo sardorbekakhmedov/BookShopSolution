@@ -18,7 +18,6 @@ public static partial class ServiceCollectionExtensions
             options.AddPolicy(UserRoles.Admin, builder2 =>
             {
                 builder2.RequireAssertion(handler =>
-
                     handler.User.HasClaim(ClaimTypes.Role, UserRoles.Admin)
                     || handler.User.HasClaim(ClaimTypes.Role, UserRoles.SuperAdmin));
             });
