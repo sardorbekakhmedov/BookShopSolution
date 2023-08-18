@@ -37,7 +37,7 @@ public class UserManager : IUserManager
         _imageRepository = imageRepository;
     }
 
-    public async ValueTask<UserDto> InsertAsync(UserCreationDto dto)
+    public async ValueTask<UserDto> InsertAsync(CreateUserDto dto)
     {
         var username = await _userRepository.CheckConditionAsync(u => u.Username.Equals(dto.Username));
 
@@ -147,7 +147,7 @@ public class UserManager : IUserManager
         return user == null ? throw new NotFoundException("User not found!") : user.ToUserDto();
     }
 
-    public async ValueTask<UserDto> UpdateAsync(Guid userId, UserUpdateDto dto)
+    public async ValueTask<UserDto> UpdateAsync(Guid userId, UpdateUserDto dto)
     {
         var user = await _userRepository.SelectSingleAsync(u => u.Id.Equals(userId)); ;
 

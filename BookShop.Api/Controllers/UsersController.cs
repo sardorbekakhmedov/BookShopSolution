@@ -74,7 +74,7 @@ public class UsersController : ControllerBase
 
     [HttpPut("{userId:guid}")]
     [Authorize(Policy = UserRoles.User)]
-    public async ValueTask<IActionResult> Update(Guid userId, UserUpdateDto dto)
+    public async ValueTask<IActionResult> Update(Guid userId, UpdateUserDto dto)
     {
         if (!ModelState.IsValid)
             return BadRequest(dto);

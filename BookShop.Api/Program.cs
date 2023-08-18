@@ -21,6 +21,7 @@ builder.Services.AddBookshopDbContext(builder.Configuration);
 
 builder.Services.AddBookshopServices();
 builder.Services.AddBookShopRepositories();
+builder.Services.AddValidators();
 
 var app = builder.Build();
 

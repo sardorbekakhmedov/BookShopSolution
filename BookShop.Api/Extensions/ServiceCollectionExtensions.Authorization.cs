@@ -9,30 +9,30 @@ public static partial class ServiceCollectionExtensions
     {
         services.AddAuthorization(options =>
         {
-            options.AddPolicy(UserRoles.SuperAdmin, builder1 =>
+            options.AddPolicy(UserRoles.SuperAdmin, builder =>
             {
-                builder1.RequireAssertion(handler =>
+                builder.RequireAssertion(handler =>
                     handler.User.HasClaim(ClaimTypes.Role, UserRoles.SuperAdmin));
             });
 
-            options.AddPolicy(UserRoles.Admin, builder2 =>
+            options.AddPolicy(UserRoles.Admin, builder =>
             {
-                builder2.RequireAssertion(handler =>
+                builder.RequireAssertion(handler =>
                     handler.User.HasClaim(ClaimTypes.Role, UserRoles.Admin)
                     || handler.User.HasClaim(ClaimTypes.Role, UserRoles.SuperAdmin));
             });
 
-            options.AddPolicy(UserRoles.Manager, builder3 =>
+            options.AddPolicy(UserRoles.Manager, builder =>
             {
-                builder3.RequireAssertion(handler =>
+                builder.RequireAssertion(handler =>
                     handler.User.HasClaim(ClaimTypes.Role, UserRoles.SuperAdmin)
                     || handler.User.HasClaim(ClaimTypes.Role, UserRoles.Admin)
                     || handler.User.HasClaim(ClaimTypes.Role, UserRoles.Manager));
             });
 
-            options.AddPolicy(UserRoles.User, builder4 =>
+            options.AddPolicy(UserRoles.User, builder =>
             {
-                builder4.RequireAssertion(handler =>
+                builder.RequireAssertion(handler =>
                     handler.User.HasClaim(ClaimTypes.Role, UserRoles.SuperAdmin)
                     || handler.User.HasClaim(ClaimTypes.Role, UserRoles.Admin)
                     || handler.User.HasClaim(ClaimTypes.Role, UserRoles.Manager)

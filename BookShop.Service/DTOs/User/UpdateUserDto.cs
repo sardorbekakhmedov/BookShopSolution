@@ -1,6 +1,6 @@
 ﻿namespace BookShop.Service.DTOs.User;
 
-public class UserUpdateDto
+public class UpdateUserDto
 {
     public string? Firstname { get; set; }
     public string? Username { get; set; }

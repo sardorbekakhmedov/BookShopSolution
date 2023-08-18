@@ -1,6 +1,7 @@
 ﻿using BookShop.Service.DTOs.User;
 using BookShop.Service.Exceptions;
 using BookShop.Service.Managers.IManagers;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookShop.Api.Controllers;
@@ -17,10 +18,13 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> InsertUser([FromForm] UserCreationDto dto)
+    public async ValueTask<IActionResult> InsertUser([FromForm] CreateUserDto dto, 
+        [FromServices] IValidator<CreateUserDto> validator)
     {
-        if (!ModelState.IsValid)
-            return BadRequest(dto);
+        var result = await validator.ValidateAsync(dto);
+
+        if (!result.IsValid)
+            return BadRequest(result.Errors);
 
         try
         {
@@ -41,7 +45,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(string username, string password)
+    public async ValueTask<IActionResult> Login(string username, string password)
     {
         if (!ModelState.IsValid)
             return BadRequest($"{username}, {password}");
